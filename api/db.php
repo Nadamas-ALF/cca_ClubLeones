@@ -8,8 +8,7 @@ function getConnection()
     $conn = oci_connect($ora_user, $ora_pass, $ora_conn_str, 'AL32UTF8');
 
     if (!$conn) {
-        $e = oci_error();
-        die("ERROR de conexion: " . $e['message']);
+        return false;
     }
 
     return $conn;
