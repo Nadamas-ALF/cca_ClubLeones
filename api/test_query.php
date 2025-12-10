@@ -2,11 +2,11 @@
 
 require_once __DIR__ . '/db.php';
 
-$conn = getConnection(); 
+$conn = getConnection();
 
 echo "<pre>";
 
-echo "OK conexión como usuario: ADMJDRU\n";
+echo "OK conexión como usuario: ADMLEON\n";
 
 $sql = "SELECT table_name FROM user_tables";
 $stid = oci_parse($conn, $sql);
