@@ -1,6 +1,39 @@
 
---hace falta uno 
+--Insertar socio revisando que el correo sea válido
+CREATE OR REPLACE PROCEDURE insertar_socio_con_regex (
+    p_nombre_socio      IN SOCIOS.nombre_socio%TYPE,
+    p_fecha_nacimiento  IN SOCIOS.fecha_nacimiento%TYPE,
+    p_fecha_ingreso     IN SOCIOS.fecha_ingreso%TYPE,
+    p_numero_socio      IN SOCIOS.número_socio%TYPE,
+    p_cod_distrito      IN SOCIOS.cod_distrito%TYPE,
+    p_desc_direccion    IN SOCIOS.desc_direccion%TYPE,
+    p_telefono1         IN SOCIOS.telefono1%TYPE,
+    p_telefono2         IN SOCIOS.telefono2%TYPE,
+    p_tipo_socio        IN SOCIOS.tipo_socio%TYPE DEFAULT 'R',
+    p_estado_socio      IN SOCIOS.estado_socio%TYPE DEFAULT 'A',
+    p_email             IN VARCHAR2
+)
+IS
+BEGIN
+    -- Validar email con expresión regular
+    IF NOT REGEXP_LIKE(p_email, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$') THEN
+        RAISE_APPLICATION_ERROR(-20200, 'Formato de correo electrónico inválido.');
+    END IF;
 
+    INSERT INTO SOCIOS (
+        nombre_socio, fecha_nacimiento, fecha_ingreso, número_socio,
+        cod_distrito, desc_direccion, telefono1, telefono2,
+        tipo_socio, estado_socio
+    )
+    VALUES (
+        p_nombre_socio, p_fecha_nacimiento, p_fecha_ingreso, p_numero_socio,
+        p_cod_distrito, p_desc_direccion, p_telefono1, p_telefono2,
+        p_tipo_socio, p_estado_socio
+    );
+
+    COMMIT;
+END insertar_socio_con_regex;
+/
 
 --Insrtar provincia revisando que solamente tenga letras y espacios en el nombre
 CREATE OR REPLACE PROCEDURE insertar_provincia_regex (
