@@ -1014,5 +1014,14 @@ BEGIN
 END eliminar_transac_cta;
 /
 
+CREATE OR REPLACE PROCEDURE eliminar_tipo_pago (
+    p_id_tipo_pago IN TIPO_PAGO.id_tip_pago%TYPE
+)
+IS
+BEGIN
+    DELETE FROM TIPO_PAGO
+    WHERE id_tip_pago = p_id_tipo_pago;
 
+    COMMIT;
+END eliminar_tipo_pago;
 
