@@ -1,26 +1,22 @@
---Listar provincias usando cursor
-CREATE OR REPLACE PROCEDURE listar_provincias
-IS
-    CURSOR cur_provincias IS
-        SELECT cod_provincia, nombre_provincia
-        FROM PROVINCIAS
-        ORDER BY nombre_provincia;
-
-    v_cod   PROVINCIAS.cod_provincia%TYPE;
-    v_nom   PROVINCIAS.nombre_provincia%TYPE;
+--hacer un join para mostrar el id de socio y el id de la actividad junto con sus nombres
+CREATE OR REPLACE PROCEDURE listar_actividades_socios (
+    p_cursor OUT SYS_REFCURSOR
+)
+AS
 BEGIN
-    OPEN cur_provincias;
-    LOOP
-        FETCH cur_provincias INTO v_cod, v_nom;
-        EXIT WHEN cur_provincias%NOTFOUND;
-
-        DBMS_OUTPUT.PUT_LINE('Provincia: ' || v_cod || ' - ' || v_nom);
-    END LOOP;
-    CLOSE cur_provincias;
-END listar_provincias;
+    OPEN p_cursor FOR
+        SELECT 
+            asoc.id_activ_soc,
+            act.nombre_actividad,
+            soc.nombre_socio
+        FROM activ_socio asoc
+        JOIN actividades act ON act.id_actividad = asoc.id_actividad
+        JOIN socios soc ON soc.id_socio = asoc.id_socio
+        ORDER BY asoc.id_activ_soc;
+END listar_actividades_socios;
 /
 
---Mostrar cantones por provincia
+--Mostrar cantones por provincia -falta 
 CREATE OR REPLACE PROCEDURE listar_cantones_por_provincia (
     p_cod_provincia IN CANTONES.cod_provincia%TYPE
 )
@@ -44,7 +40,7 @@ BEGIN
 END listar_cantones_por_provincia;
 /
 
---Mostrar socios activos
+--Mostrar socios activos -falta 
 CREATE OR REPLACE PROCEDURE listar_socios_activos
 IS
     CURSOR cur_socios IS
@@ -67,7 +63,7 @@ BEGIN
 END listar_socios_activos;
 /
 
---Transacciones por año de pago
+--Transacciones por año de pago -falta 
 CREATE OR REPLACE PROCEDURE listar_transacciones_an (
     p_an_pago IN TRANSACCIONES.an_pago%TYPE
 )
