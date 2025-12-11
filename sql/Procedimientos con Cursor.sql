@@ -66,7 +66,7 @@ END;
 /
 
 
---cursor para reporte_pagos_cuotas_socio --falta implementar
+--cursor para reporte_pagos_cuotas_socio
 CREATE OR REPLACE PROCEDURE reporte_pagos_cuotas_socio (
     p_id_socio IN  SOCIOS.id_socio%TYPE,
     p_fecha_desde IN  DATE,
@@ -105,7 +105,7 @@ BEGIN
 END;
 /
 
---cursor para facturacion --falta implementar 
+--cursor para facturacion
 CREATE OR REPLACE PROCEDURE obtener_recibo_pago (
     p_id_transaccion IN TRANSACCIONES.id_transaccion%TYPE,
     p_cursor         OUT SYS_REFCURSOR
